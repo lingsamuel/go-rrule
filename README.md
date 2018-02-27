@@ -2,7 +2,9 @@
 
 [RFC 5545](https://tools.ietf.org/html/rfc5545) (modified and partial) implementation in Go.
 
-## Usage
+For calendar usage.
+
+## Compile
 
 ```sh
 dep init

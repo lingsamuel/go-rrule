@@ -11,7 +11,7 @@ const (
 )
 
 var (
-	freqMap = map[Freq]string{
+	FreqToStringMap = map[Freq]string{
 		0:       "SECONDLY",
 		1:       "MINUTELY",
 		2:       "HOURLY",
@@ -20,8 +20,18 @@ var (
 		Monthly: "MONTHLY",
 		Yearly:  "YEARLY",
 	}
+
+	StringToFreqMap = map[string]Freq{
+		"SECONDLY": 0,
+		"MINUTELY": 1,
+		"HOURLY":   2,
+		"DAILY":    Daily,
+		"WEEKLY":   Weekly,
+		"MONTHLY":  Monthly,
+		"YEARLY":   Yearly,
+	}
 )
 
 func (f *Freq) String() string {
-	return freqMap[*f]
+	return FreqToStringMap[*f]
 }

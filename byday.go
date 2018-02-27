@@ -132,7 +132,7 @@ func ParseByDay(byDaySrc string) (*ByDay, error) {
 	return nil, err
 }
 
-// Division weekday divide ByDayList to unlimitedWeekday and limitedWeekday
+// Division weekday divide ByDayList to unlimitedWeekday and orderLimitedWeekday
 func divisionWeekday(byDayList ByDayList) (ByDayList, ByDayList) {
 	var unlimitedWeekday, limitedWeekday ByDayList
 

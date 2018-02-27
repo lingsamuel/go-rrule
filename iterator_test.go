@@ -27,7 +27,7 @@ var _ = Describe("RecurrenceRule", func() {
 				End:   end,
 				RecurrenceRule: &rrule.RecurrenceRule{
 					Freq:  rrule.Daily,
-					Until: &until,
+					Until: until,
 				},
 			}
 			iterator = iterator.Next()

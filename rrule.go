@@ -22,7 +22,7 @@ type RecurrenceRule struct {
 	Freq Freq
 
 	// UNTIL and COUNT can only have 1
-	Until *time.Time // nil means forever
+	Until time.Time // nil means forever
 	Count int64      // 0 means non
 
 	// BYX
@@ -38,9 +38,5 @@ func (rrule *RecurrenceRule) Clone() *RecurrenceRule {
 		return nil
 	}
 	r := *rrule
-	if rrule.Until != nil {
-		t := *rrule.Until
-		r.Until = &t
-	}
 	return &r
 }

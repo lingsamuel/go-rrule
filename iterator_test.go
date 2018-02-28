@@ -115,86 +115,27 @@ var _ = Describe("RecurrenceRule", func() {
 			iterator = iterator.Next()
 			Expect(iterator).To(BeNil())
 		})
-		//It("Should return correct HasIntersection", func() {
-		//	start := time.Date(2017, 9, 13, 0, 0, 0, 0, time.UTC)
-		//	end := start.Add(time.Hour)
-		//	iterator := &RecurrenceRuleIterator{
-		//		Start: start,
-		//		End:   end,
-		//		RecurrenceRule: &RecurrenceRule{
-		//			Freq: Daily,
-		//		},
-		//	}
-		//	Expect(iterator.HasIntersection(TimeRange{
-		//		Left:       time.Date(2017, 9, 13, 0, 0, 0, 0, time.UTC),
-		//		Right:      time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//		LeftClosed: true,
-		//	})).To(BeTrue())
-		//	Expect(iterator.HasIntersection(TimeRange{
-		//		Left:       time.Date(2017, 9, 13, 1, 0, 0, 0, time.UTC),
-		//		Right:      time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//		LeftClosed: true,
-		//	})).To(BeFalse())
-		//	// [2017-09-13 00:00:00Z, 2017-09-13 01:00:00Z) ∩ [2017-09-13 00:01:00Z, 2017-10-13 00:00:00Z) = ∅
-		//	Expect(iterator.HasIntersection(TimeRange{
-		//		Left:       time.Date(2017, 9, 13, 1, 0, 0, 1, time.UTC),
-		//		Right:      time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//		LeftClosed: true,
-		//	})).To(BeFalse())
-		//	// [2017-09-13 00:00:00Z, 2017-09-13 01:00:00Z) ∩ (2017-09-13 00:01:00Z, 2017-10-13 00:00:00Z) = ∅
-		//	Expect(iterator.HasIntersection(TimeRange{
-		//		Left:  time.Date(2017, 9, 13, 1, 0, 0, 0, time.UTC),
-		//		Right: time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//	})).To(BeFalse())
-		//})
-		//It("Should return correct next within range", func() {
-		//	start := time.Date(2017, 9, 13, 0, 0, 0, 0, time.UTC)
-		//	end := start.Add(time.Hour)
-		//	iterator := &RecurrenceRuleIterator{
-		//		Start: start,
-		//		End:   end,
-		//		RecurrenceRule: &RecurrenceRule{
-		//			Freq: Daily,
-		//		},
-		//	}
-		//	i1 := iterator.NextWithinRange(TimeRange{
-		//		Left:       time.Date(2017, 9, 13, 0, 0, 0, 0, time.UTC),
-		//		Right:      time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//		LeftClosed: true,
-		//	})
-		//	Expect(i1.Start.Equal(time.Date(2017, 9, 14, 0, 0, 0, 0, time.UTC))).To(BeTrue())
-		//	Expect(i1.End.Equal(time.Date(2017, 9, 14, 1, 0, 0, 0, time.UTC))).To(BeTrue())
-		//	i2 := iterator.NextWithinRange(TimeRange{
-		//		Left:       time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//		Right:      time.Date(2017, 11, 13, 0, 0, 0, 0, time.UTC),
-		//		LeftClosed: true,
-		//	})
-		//	Expect(i2.Start.Equal(time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC))).To(BeTrue())
-		//	Expect(i2.End.Equal(time.Date(2017, 10, 13, 1, 0, 0, 0, time.UTC))).To(BeTrue())
-		//})
-		//It("Should return correct first within range", func() {
-		//	start := time.Date(2017, 9, 13, 0, 0, 0, 0, time.UTC)
-		//	end := start.Add(time.Hour)
-		//	iterator := &RecurrenceRuleIterator{
-		//		Start: start,
-		//		End:   end,
-		//		RecurrenceRule: &RecurrenceRule{
-		//			Freq: Daily,
-		//		},
-		//	}
-		//	i1 := iterator.FirstWithinRange(TimeRange{
-		//		Left:  time.Date(2017, 9, 13, 1, 0, 0, 0, time.UTC),
-		//		Right: time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//	})
-		//	Expect(i1.Start.Equal(time.Date(2017, 9, 14, 0, 0, 0, 0, time.UTC))).To(BeTrue())
-		//	Expect(i1.End.Equal(time.Date(2017, 9, 14, 1, 0, 0, 0, time.UTC))).To(BeTrue())
-		//	i2 := iterator.FirstWithinRange(TimeRange{
-		//		Left:  time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC),
-		//		Right: time.Date(2017, 11, 13, 0, 0, 0, 0, time.UTC),
-		//	})
-		//	Expect(i2.Start.Equal(time.Date(2017, 10, 13, 0, 0, 0, 0, time.UTC))).To(BeTrue())
-		//	Expect(i2.End.Equal(time.Date(2017, 10, 13, 1, 0, 0, 0, time.UTC))).To(BeTrue())
-		//})
+
+		It("Should be able to generate with MONTHLY and BYDAY", func() {
+			start := time.Date(2017, 6, 6, 0, 0, 0, 0, time.UTC)
+			end := start.Add(time.Hour)
+			iterator := &rrule.RecurrenceRuleIterator{
+				Start: start,
+				End:   end,
+				RecurrenceRule: &rrule.RecurrenceRule{
+					Freq:  rrule.Monthly,
+					ByDay: rrule.ParseByDayList("1TU"),
+				},
+			}
+			iterator = iterator.Next()
+			Expect(iterator.Start.Equal(time.Date(2017, 7, 4, 0, 0, 0, 0, time.UTC))).To(BeTrue())
+			iterator = iterator.Next()
+			Expect(iterator.Start.Equal(time.Date(2017, 8, 1, 0, 0, 0, 0, time.UTC))).To(BeTrue())
+			iterator = iterator.Next()
+			Expect(iterator.Start.Equal(time.Date(2017, 9, 5, 0, 0, 0, 0, time.UTC))).To(BeTrue())
+			iterator = iterator.Next()
+			Expect(iterator.Start.Equal(time.Date(2017, 10, 3, 0, 0, 0, 0, time.UTC))).To(BeTrue())
+		})
 
 		It("Should be able to generate with interval", func() {
 			start := time.Date(2017, 9, 13, 0, 0, 0, 0, time.UTC)

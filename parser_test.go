@@ -30,7 +30,6 @@ var _ = Describe("RRule Parser Test", func() {
 			Expect(err).NotTo(BeNil())
 		}
 
-		errTest("")
 		errTest("INVALID")
 		errTest("RRULE:")
 		errTest("RRULE:FREQ=R")

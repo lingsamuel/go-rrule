@@ -20,7 +20,6 @@ import "time"
 type RecurrenceRule struct {
 	// Required
 	Freq Freq
-	DStart time.Time
 
 	// UNTIL and COUNT can only have 1
 	Until time.Time // nil means forever

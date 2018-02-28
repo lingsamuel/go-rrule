@@ -6,6 +6,7 @@ import (
 	"unicode"
 
 	"strings"
+	"fmt"
 )
 
 var WeekdayToByDayMap = map[time.Weekday]string{
@@ -75,11 +76,11 @@ func ParseByDayList(byDayListSrc string) ByDayList {
 	return byDayList
 }
 
-func ToString(list ByDayList) string {
+func ByDayListToString(list ByDayList) string {
 	result := ""
 	for i, v := range list {
-		if v.OrderWeek > 0 {
-			result += string(v.OrderWeek)
+		if v.OrderWeek != 0 {
+			result += fmt.Sprintf("%v", v.OrderWeek)
 		}
 		result += WeekdayToByDayMap[v.Weekday]
 		if i != (len(list) - 1) {

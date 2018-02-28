@@ -7,12 +7,15 @@ import (
 )
 
 func Parse(rrule string, loc *time.Location) (*RecurrenceRule, error) {
+	if len(rrule) == 0 {
+		return nil, nil
+	}
 	if loc == nil {
 		loc = time.UTC
 	}
 	prefix := "RRULE:"
 	if !strings.HasPrefix(rrule, prefix) || rrule == prefix {
-		return nil, Errorf("Empty or wrong RRule.")
+		return nil, Errorf("Wrong RRule.")
 	}
 
 	if !strings.Contains(rrule, "FREQ=") {

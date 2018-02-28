@@ -72,6 +72,20 @@ func ParseByDayList(byDayListSrc string) ByDayList {
 	return byDayList
 }
 
+func ToString(list ByDayList) string {
+	result := ""
+	for i, v := range list {
+		if v.OrderWeek > 0 {
+			result += string(v.OrderWeek)
+		}
+		result += WeekdayToByDayMap[v.Weekday]
+		if i != (len(list) - 1) {
+			result += ","
+		}
+	}
+	return result
+}
+
 func ParseByDay(byDaySrc string) (*ByDay, error) {
 	var byDay = new(ByDay)
 	var orderWeek int

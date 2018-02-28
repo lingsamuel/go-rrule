@@ -15,7 +15,7 @@ var _ = Describe("RRule Parser Test", func() {
 		Expect(err).To(BeNil())
 		rrule, err := Parse("RRULE:FREQ=WEEKLY;UNTIL=20180711T070000Z;BYDAY=TU,WE;INTERVAL=2;COUNT=3", nil)
 
-		Expect(rrule.Freq).To(Equal(StringToFreqMap["WEEKLY"]))
+		Expect(rrule.Freq).To(Equal(ParseFreq("WEEKLY")))
 		Expect(rrule.Until.Unix()).To(Equal(t.Unix()))
 		Expect(rrule.Until.Unix()).To(Equal(int64(1531292400)))
 		Expect(rrule.Interval).To(Equal(2))

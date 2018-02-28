@@ -11,7 +11,7 @@ const (
 )
 
 var (
-	FreqToStringMap = map[Freq]string{
+	freqToStringMap = map[Freq]string{
 		0:       "SECONDLY",
 		1:       "MINUTELY",
 		2:       "HOURLY",
@@ -21,7 +21,7 @@ var (
 		Yearly:  "YEARLY",
 	}
 
-	StringToFreqMap = map[string]Freq{
+	stringToFreqMap = map[string]Freq{
 		"SECONDLY": 0,
 		"MINUTELY": 1,
 		"HOURLY":   2,
@@ -33,5 +33,15 @@ var (
 )
 
 func (f *Freq) String() string {
-	return FreqToStringMap[*f]
+	return freqToStringMap[*f]
+}
+
+// TODO CHECK NoRecurrence usage
+// ParseFreq input and return RecurrenceFreq, will return NoRecurrence if input is invalid or empty string
+func ParseFreq(input string) Freq {
+	freq, ok := stringToFreqMap[input]
+	if ok {
+		return freq
+	}
+	return NoRecurrence
 }

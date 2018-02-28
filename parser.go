@@ -32,11 +32,10 @@ func Parse(rrule string, loc *time.Location) (*RecurrenceRule, error) {
 			if len(v) == 0 {
 				return nil, Errorf("FREQ value does not exist!")
 			}
-			freq, ok := StringToFreqMap[v]
-			if ok {
-				res.Freq = freq
-			} else {
-				return nil, Errorf("FREQ value %v is invalid.", freq)
+			res.Freq = ParseFreq(v)
+
+			if res.Freq == NoRecurrence {
+				return nil, Errorf("FREQ value %v is invalid.", v)
 			}
 		}
 		if k == "UNTIL" {

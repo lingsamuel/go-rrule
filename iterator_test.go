@@ -9,7 +9,7 @@ import (
 )
 
 var _ = Describe("RecurrenceRule", func() {
-	Describe("RecurrenceRuleIterator", func() {
+	Describe("Iterator", func() {
 		It("Should return nil if rrule is nil", func() {
 			now := time.Now()
 			iterator := &rrule.RecurrenceRuleIterator{
@@ -279,5 +279,54 @@ var _ = Describe("RecurrenceRule", func() {
 		})
 
 		// TODO more complex test case
+	})
+
+	Describe("Iterator and reverse iterator", func() {
+		It("Should be generate stable result", func() {
+			start := time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC) // TU
+			end := start.Add(time.Hour)
+			iterator := &rrule.RecurrenceRuleIterator{
+				Start: start,
+				End:   end,
+				RecurrenceRule: &rrule.RecurrenceRule{
+					Freq:     rrule.Monthly,
+					ByDay:    rrule.ParseByDayList("1MO,2MO,3MO,4MO"),
+					Interval: 2,
+					Count:    10,
+				},
+			}
+
+			resultSlice := []*rrule.RecurrenceRuleIterator{iterator}
+
+			next := iterator.Next()
+			for {
+				if next != nil {
+					resultSlice = append(resultSlice, next)
+					if next.Next() != nil {
+						next = next.Next()
+					} else {
+						break
+					}
+				} else {
+					break
+				}
+			}
+
+			i := len(resultSlice) - 1
+			previous := next
+			for {
+				if i == 0 {
+					// because iterator know nothing about first appearance
+					break
+				}
+				shouldBe := resultSlice[i]
+				Expect(previous).NotTo(BeNil())
+				Expect(previous.Start == shouldBe.Start).To(BeTrue())
+				Expect(previous.End == shouldBe.End).To(BeTrue())
+				i--
+				previous = previous.Previous()
+			}
+		})
+
 	})
 })

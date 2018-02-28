@@ -54,6 +54,9 @@ func (byDay *ByDay) validate() (bool, error) {
 }
 
 func ParseByDayList(byDayListSrc string) ByDayList {
+	if len(byDayListSrc) == 0 {
+		return nil
+	}
 	byDaySlice := strings.Split(byDayListSrc, ",")
 	var byDayList ByDayList
 
@@ -87,6 +90,9 @@ func ToString(list ByDayList) string {
 }
 
 func ParseByDay(byDaySrc string) (*ByDay, error) {
+	if len(byDaySrc) == 0 {
+		return nil, Errorf("Empty BYDAY")
+	}
 	var byDay = new(ByDay)
 	var orderWeek int
 	var weekday string

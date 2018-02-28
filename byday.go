@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var weekdayToByDayMap = map[time.Weekday]string{
+var WeekdayToByDayMap = map[time.Weekday]string{
 	time.Sunday:    "SU",
 	time.Monday:    "MO",
 	time.Tuesday:   "TU",
@@ -18,7 +18,7 @@ var weekdayToByDayMap = map[time.Weekday]string{
 	time.Saturday:  "SA",
 }
 
-var byDayToWeekdayMap = map[string]time.Weekday{
+var ByDayToWeekdayMap = map[string]time.Weekday{
 	"SU": time.Sunday,
 	"MO": time.Monday,
 	"TU": time.Tuesday,
@@ -44,7 +44,7 @@ func (byDay *ByDay) validate() (bool, error) {
 		return false, Errorf("Got invalid BYDAY order week: %v", byDay.OrderWeek)
 	}
 
-	_, ok := weekdayToByDayMap[byDay.Weekday]
+	_, ok := WeekdayToByDayMap[byDay.Weekday]
 
 	if !ok {
 		return false, Errorf("Got invalid BYDAY weekday: %v", byDay.Weekday)
@@ -117,7 +117,7 @@ func ParseByDay(byDaySrc string) (*ByDay, error) {
 
 	// Generate and validate value
 	byDay.OrderWeek = orderWeek
-	byDayWeekday, ok := byDayToWeekdayMap[weekday]
+	byDayWeekday, ok := ByDayToWeekdayMap[weekday]
 	if ok {
 		byDay.Weekday = byDayWeekday
 	} else {

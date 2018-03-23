@@ -205,8 +205,8 @@ func (iter *RecurrenceRuleIterator) internalGenerate(factor int) *RecurrenceRule
 
 	// Although RFC says that COUNT and UNTIL is conflict
 	// but we can just check it, I don't know why they have to conflict
-	// In this implement, occurrence should Satisfy UNTIL and COUNT both
-	if !(until.Unix() < 0) { // empty until(time.Time) is < 0
+	// In this implement, occurrence should satisfy UNTIL and COUNT both
+	if !(until.Unix() <= 0) { // empty until(time.Time) is < 0
 		if factor == 1 {
 			if next.Start.After(until) {
 				return nil
